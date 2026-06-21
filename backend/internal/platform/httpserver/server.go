@@ -11,13 +11,14 @@ import (
 )
 
 // NewRouter はミドルウェアと、openapi 契約から生成したルートを備えた http.Handler を構築する。
-func NewRouter(logger *slog.Logger) http.Handler {
+// db は readiness(/readyz)で疎通確認する依存。
+func NewRouter(logger *slog.Logger, db Pinger) http.Handler {
 	r := chi.NewRouter()
 	r.Use(middleware.RequestID)
 	r.Use(middleware.Recoverer)
 
 	// openapi.yaml(spec-first)から生成した interface を実装に結線する。
-	httpapi.HandlerFromMux(apiServer{}, r)
+	httpapi.HandlerFromMux(newAPIServer(db), r)
 
 	_ = logger // ルート別ロギング等で利用予定(今後拡張)
 	return r

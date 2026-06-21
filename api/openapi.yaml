@@ -7,10 +7,27 @@ paths:
   /healthz:
     get:
       operationId: getHealthz
-      summary: liveness probe
+      summary: liveness probe(依存に関係なく常に 200)
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Health"
+  /readyz:
+    get:
+      operationId: getReadyz
+      summary: readiness probe(依存 = DB 疎通を確認)
+      responses:
+        "200":
+          description: 依存先に到達可能
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Health"
+        "503":
+          description: 依存先に到達不可
           content:
             application/json:
               schema:

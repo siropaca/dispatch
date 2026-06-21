@@ -17,18 +17,27 @@ type Health struct {
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
-	// liveness probe
+	// liveness probe(依存に関係なく常に 200)
 	// (GET /healthz)
 	GetHealthz(w http.ResponseWriter, r *http.Request)
+	// readiness probe(依存 = DB 疎通を確認)
+	// (GET /readyz)
+	GetReadyz(w http.ResponseWriter, r *http.Request)
 }
 
 // Unimplemented server implementation that returns http.StatusNotImplemented for each endpoint.
 
 type Unimplemented struct{}
 
-// liveness probe
+// liveness probe(依存に関係なく常に 200)
 // (GET /healthz)
 func (_ Unimplemented) GetHealthz(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+// readiness probe(依存 = DB 疎通を確認)
+// (GET /readyz)
+func (_ Unimplemented) GetReadyz(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotImplemented)
 }
 
@@ -46,6 +55,20 @@ func (siw *ServerInterfaceWrapper) GetHealthz(w http.ResponseWriter, r *http.Req
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.GetHealthz(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetReadyz operation middleware
+func (siw *ServerInterfaceWrapper) GetReadyz(w http.ResponseWriter, r *http.Request) {
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetReadyz(w, r)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -170,6 +193,9 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/healthz", wrapper.GetHealthz)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/readyz", wrapper.GetReadyz)
 	})
 
 	return r

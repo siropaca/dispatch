@@ -11,8 +11,25 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** liveness probe */
+        /** liveness probe(依存に関係なく常に 200) */
         get: operations["getHealthz"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/readyz": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** readiness probe(依存 = DB 疎通を確認) */
+        get: operations["getReadyz"];
         put?: never;
         post?: never;
         delete?: never;
@@ -49,6 +66,35 @@ export interface operations {
         responses: {
             /** @description OK */
             200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Health"];
+                };
+            };
+        };
+    };
+    getReadyz: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 依存先に到達可能 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Health"];
+                };
+            };
+            /** @description 依存先に到達不可 */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };
