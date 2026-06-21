@@ -25,14 +25,14 @@ tasks:
       - docker compose -f deploy/docker/docker-compose.yml down
 
   dev:
-    desc: "api / web をローカル起動 (M3 / M5)"
+    desc: "api をローカル起動 (web は M5 で追加)"
     cmds:
-      - 'echo "TODO: M3 / M5 で実装"'
+      - cd backend && go run ./cmd/api
 
   test:
-    desc: "テスト (M3+)"
+    desc: "テスト (go test。web は M5 で追加)"
     cmds:
-      - 'echo "TODO: M3 で go test / vitest を実装"'
+      - cd backend && go test ./...
 
   lint:
     desc: "lint (M6)"

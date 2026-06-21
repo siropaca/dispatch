@@ -1,5 +1,5 @@
 [tools]
-go = "1.24"
+go = "1.25"
 node = "24.15"
 pnpm = "11"
 task = "3"
