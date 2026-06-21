@@ -27,9 +27,10 @@ Railway に **3 サービス**を作る(同一リポジトリを参照)。詳細
 - Dockerfile のビルドコンテキストはリポジトリ **root**(`backend/` を参照するため)。
 - `PORT` は Railway が注入し、app(api / worker)はそれを読む。
 
-## 注意
+## マイグレーション
 
-- **マイグレーションは自動実行されない**。api は起動時に DB へ Ping するだけなので、空 DB でも `/healthz` は通る。スキーマ適用(goose)は Phase 1 で取材機能を作る際に行う。
+- 現状は **自動実行されない**(api は起動時に DB へ Ping するだけ。空 DB でも `/healthz` は通る)。
+- **Phase 1 で自動化する**: migration を `//go:embed` でバイナリに同梱し、Railway の **Pre-Deploy Command** で `goose up` を実行する(アプリ起動とは分離、多レプリカでも安全・冪等)。将来の Cloud Run では Cloud Run Job として同じバイナリを実行。
 
 ## 将来(全 GCP)
 
