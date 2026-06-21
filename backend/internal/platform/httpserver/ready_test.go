@@ -59,12 +59,12 @@ func TestGetReadyz(t *testing.T) {
 	})
 }
 
-// TestRouter_Readyz は openapi 経由のルート結線(/readyz が NewRouter で配信される)を検証する。
+// TestRouter_Readyz は openapi 経由のルート結線(/api/readyz が NewRouter で配信される)を検証する。
 func TestRouter_Readyz(t *testing.T) {
 	ts := httptest.NewServer(NewRouter(discardLogger(), fakePinger{err: nil}))
 	defer ts.Close()
 
-	res, err := http.Get(ts.URL + "/readyz")
+	res, err := http.Get(ts.URL + "/api/readyz")
 	if err != nil {
 		t.Fatalf("GET /readyz: %v", err)
 	}

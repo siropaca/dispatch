@@ -6,9 +6,9 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
-    // dev では api(:8080)へプロキシし、本番の単一オリジンと同じ相対パスで叩く
+    // dev では /api を api(:8080)へプロキシ。本番は web(Caddy)が同じ /api を
+    // api へ振り分けるため、相対パスのまま単一オリジンで叩ける(ADR-0015)。
     proxy: {
-      '/healthz': 'http://localhost:8080',
       '/api': 'http://localhost:8080',
     },
   },

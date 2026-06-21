@@ -17,8 +17,9 @@ func NewRouter(logger *slog.Logger, db Pinger) http.Handler {
 	r.Use(middleware.RequestID)
 	r.Use(middleware.Recoverer)
 
-	// openapi.yaml(spec-first)から生成した interface を実装に結線する。
-	httpapi.HandlerFromMux(newAPIServer(db), r)
+	// openapi.yaml(spec-first)から生成した interface を /api 配下に結線する。
+	// 公開は web(Caddy)が単一オリジンで /api/* を api へ振り分ける(ADR-0015)。
+	httpapi.HandlerFromMuxWithBaseURL(newAPIServer(db), r, "/api")
 
 	_ = logger // ルート別ロギング等で利用予定(今後拡張)
 	return r
