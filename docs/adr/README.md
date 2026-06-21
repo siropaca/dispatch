@@ -18,3 +18,4 @@ Dispatch の主要な技術的意思決定の記録(**MADR 4** 形式)。**1 ADR
 | [0012](./0012-ai-cost-guardrails.md) | AI コストは事前ガード(per-run 上限 + 予算上限) | 採用 |
 | [0013](./0013-cross-context-unit-of-work.md) | context 跨ぎの書き込みは Unit of Work で 1 トランザクション | 採用 |
 | [0014](./0014-regulated-domain-guardrails.md) | 規制分野(医療・法務・投資)のガードレール | 採用 |
+| [0015](./0015-public-topology-edge-proxy.md) | 公開トポロジ: エッジプロキシで単一オリジン + frontend/api 分離 | 採用 |

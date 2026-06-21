@@ -7,19 +7,23 @@
 ## 1. トポロジ(今 = ハイブリッド)
 
 ```
-              Cloud Scheduler(cron, GCP)
-                     │ tick (OIDC)
-                     ▼
-[React SPA]─REST→ [ api (Go / Railway) ] ─Enqueue→ [ Cloud Tasks (GCP) ]
-                   │ Clerk JWT 検証                      │ push (OIDC, 型=Connect)
-                   │ SPA 静的配信(MVP)                   ▼
-                   └────────→ [ Railway Postgres ] ←── [ worker (Go / Railway) ]
-                                                          ├─→ GCS(画像)
-                                                          ├─→ Tavily(検索)
-                                                          └─→ OpenAI / Anthropic(LLM・gpt-image-1)
+                          Cloud Scheduler(cron, GCP)
+                                 │ tick (OIDC)
+                                 ▼
+[ブラウザ]─→ [ web (Caddy / Railway) ] ← 公開: 独自ドメイン(単一オリジン)
+                 │  /      → SPA 配信
+                 │  /api/* → reverse_proxy
+                 ▼
+             [ api (Go / Railway・private) ] ─Enqueue→ [ Cloud Tasks (GCP) ]
+                 │ Clerk JWT 検証                          │ push (OIDC, 型=Connect)
+                 └──→ [ Railway Postgres ] ←──────────── [ worker (Go / Railway) ]
+                                                            ├─→ GCS(画像)
+                                                            ├─→ Tavily(検索)
+                                                            └─→ OpenAI / Anthropic(LLM・gpt-image-1)
 ```
 
-- **api**(Go / Railway): 公開 REST エッジ、Clerk JWT 検証、MVP では SPA 静的配信も担う、Cloud Tasks への enqueue。
+- **web**(Caddy / Railway): 唯一の公開エントリ(独自ドメイン)。SPA を配信し `/api/*` を api へリバースプロキシする単一オリジン構成([ADR-0015](../adr/0015-public-topology-edge-proxy.md))。CORS 不要。
+- **api**(Go / Railway・private): `/api` 配下の REST、Clerk JWT 検証、Cloud Tasks への enqueue。公開ドメインを持たず web からのみ到達。
 - **worker**(Go / Railway): Cloud Tasks の push を受ける HTTP ハンドラ(OIDC 検証)。取材パイプライン本体。Cloud Run へそのまま載る形。
 - **Railway Postgres**: 主データストア。
 - **GCP**: Cloud Tasks(キュー)/ Cloud Scheduler(定期実行)/ GCS(画像)。
@@ -29,7 +33,8 @@
 
 | 役割 | 今(ハイブリッド) | 本格運用(全 GCP) |
 |---|---|---|
-| api / worker 実行 | Railway service | Cloud Run |
+| web / api / worker 実行 | Railway service | Cloud Run |
+| 公開エッジ / ルーティング | web(Caddy)が単一ドメインで `/` と `/api` を振り分け | 外部 HTTPS LB のパスルールで振り分け(URL は不変) |
 | Postgres | Railway PG | Cloud SQL |
 | キュー / 定期実行 / 画像 | Cloud Tasks / Scheduler / GCS | 同じ(変更なし) |
 | シークレット | Railway env | Secret Manager |
