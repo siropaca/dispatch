@@ -14,3 +14,7 @@ Dispatch の主要な技術的意思決定の記録(**MADR 4** 形式)。**1 ADR
 | [0008](./0008-frontend-react-vite.md) | フロント: Vite + React + TanStack | 採用 |
 | [0009](./0009-monorepo-toolchain.md) | モノリポ: mise + Taskfile + pnpm | 採用 |
 | [0010](./0010-testing-harness.md) | テスト & ハーネス | 採用 |
+| [0011](./0011-reporting-idempotency.md) | 取材ジョブは reporting_run_id で冪等にする | 採用 |
+| [0012](./0012-ai-cost-guardrails.md) | AI コストは事前ガード(per-run 上限 + 予算上限) | 採用 |
+| [0013](./0013-cross-context-unit-of-work.md) | context 跨ぎの書き込みは Unit of Work で 1 トランザクション | 採用 |
+| [0014](./0014-regulated-domain-guardrails.md) | 規制分野(医療・法務・投資)のガードレール | 採用 |
