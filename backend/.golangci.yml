@@ -7,16 +7,28 @@ linters:
   settings:
     depguard:
       rules:
-        # DDD: domain は infra(DB ドライバ・HTTP FW 等)に依存しない。
-        # context が増えたら越境禁止ルールをここに追加する。
+        # DDD: domain は infra に一切依存しない(port 経由で adapters へ)。
+        # 個別 deny の列挙漏れを防ぐため、infra の置き場である platform ツリー全体と
+        # 代表的な infra(DB / HTTP / RPC)をまとめて禁止する。
+        # NOTE: context が増えたら、各 context の domain/app に「自 context 以外の internal/<other> を deny」
+        #       する越境禁止ルールをここに追加する。最初の context 作成時(Phase 1)に、
+        #       list-mode: strict の allow-list(stdlib + 自 context + VO ライブラリのみ許可)へ移行する。
         domain-no-infra:
           files:
             - "**/internal/*/domain/**"
           deny:
+            - pkg: github.com/siropaca/dispatch/backend/internal/platform
+              desc: "domain は platform(infra: db / http / ai / queue / blobstore 等)に依存しない"
             - pkg: github.com/jackc/pgx
               desc: "domain は DB ドライバに依存しない(port 経由で adapters へ)"
             - pkg: github.com/go-chi/chi
               desc: "domain は HTTP フレームワークに依存しない"
+            - pkg: connectrpc.com/connect
+              desc: "domain は RPC フレームワークに依存しない"
+            - pkg: net/http
+              desc: "domain は HTTP に依存しない(配信は adapters の責務)"
+            - pkg: database/sql
+              desc: "domain は SQL/DB に依存しない(永続化は adapters の責務)"
 
 formatters:
   enable:
