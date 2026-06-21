@@ -1,6 +1,7 @@
 # Phase 0 基盤構築(walking skeleton)build spec
 
 > 日付: 2026-06-21
+> ステータス: **M1–M8 完了**(CI green)。以後の正典はコード。本書は build plan の記録。
 > 前提(決定済み): [`../architecture/overview.md`](../architecture/overview.md) と [`../adr/`](../adr/README.md)。本書は設計の再決定ではなく **build plan**(何を・どの順で作り、何を満たせば完了か)。
 
 ## ゴール
@@ -10,7 +11,7 @@
 ## 非ゴール
 
 - 取材・タイムライン・交流などの実機能(Phase 1+)。
-- Cloud Tasks / Scheduler / GCS の本格配線(worker / queue 実装時。M8 で最小)。
+- Cloud Tasks / Scheduler / GCS の配線(Phase 1。Phase 0 では worker に Connect スタブを置くのみ)。
 - 認証の実装(Phase 2。ここでは `AuthProvider` 抽象の枠のみ)。
 
 ## マイルストーン
@@ -54,7 +55,7 @@
 
 ## 順序と依存
 
-M1 → M2 → M3 →(M4・M5 は並行可)→ M6 → M7 → M8。worker(`cmd/worker`)は M3 で枠のみ。Cloud Tasks 配線は Phase 1 直前。
+M1 → M2 → M3 →(M4・M5 は並行可)→ M6 → M7 → M8。worker(`cmd/worker`)は M8 で作成(HTTP `/healthz` + Connect スタブ)。Cloud Tasks 配線は Phase 1。
 
 ## 横断方針(ポインタ)
 

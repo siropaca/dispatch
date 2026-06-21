@@ -45,15 +45,16 @@ Go の重量級 FW(Gin / Echo / Fiber)は不採用。薄いライブラリをエ
 backend/                  # Go module(1 つ)
   cmd/{api,worker}/       # 2 entrypoint、internal/ を共有
   internal/
-    {identity,newsroom,reporting,publishing,timeline,interaction}/
+    {identity,newsroom,reporting,publishing,timeline,interaction}/  # context は各 Phase で追加
       domain/   # 集約・VO・Repository interface(port)
       app/      # use case
       adapters/ # postgres(sqlc) / http(oapi) / connect
-    platform/   # db, ai, queue, blobstore, config, httpserver, telemetry
+    platform/   # config, db(+sqlcgen), httpserver, httpapi(oapi 生成), telemetry … ai/queue/blobstore は Phase 1
+    proto/      # buf 生成の内部 Connect(dispatch.reporting.v1 …)
   db/{migrations(goose),queries(sqlc)}/  sqlc.yaml
 ```
 
-sqlc は `platform/db` に共有の型付きクエリ層を生成し、各 context の `adapters/postgres` がそれを使って自分の domain port を実装する(sqlc 設定を単純に保ちつつ境界を維持)。
+sqlc は `platform/db/sqlcgen` に共有の型付きクエリ層を生成し、各 context の `adapters/postgres` がそれを使って自分の domain port を実装する(sqlc 設定を単純に保ちつつ境界を維持)。
 
 ## 4. ports(domain / app に定義 → infra が実装)
 
