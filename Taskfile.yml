@@ -62,10 +62,12 @@ tasks:
       - biome check .
 
   gen:
-    desc: "codegen: sqlc (buf / openapi は M7)"
-    dir: backend
+    desc: "codegen: sqlc / oapi-codegen / openapi-typescript / buf"
     cmds:
-      - sqlc generate
+      - cd backend && sqlc generate
+      - cd backend && go tool oapi-codegen -config internal/platform/httpapi/config.yaml ../api/openapi.yaml
+      - cd packages/api-client && pnpm gen
+      - buf generate
 
   migrate:
     desc: "DB マイグレーション適用 (goose up)。要 DATABASE_URL"

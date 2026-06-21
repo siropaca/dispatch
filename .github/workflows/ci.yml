@@ -31,10 +31,6 @@ jobs:
         run: cd backend && go test ./...
       - name: golangci-lint
         run: cd backend && golangci-lint run
-      - name: sqlc drift（生成物が最新か）
-        run: |
-          cd backend && sqlc generate
-          git diff --exit-code
       - name: migrate
         run: cd backend && goose -dir db/migrations postgres "$DATABASE_URL" up
 
@@ -48,3 +44,14 @@ jobs:
         run: cd apps/web && pnpm build
       - name: biome
         run: biome check .
+
+  codegen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jdx/mise-action@v2
+      - run: pnpm install --frozen-lockfile
+      - name: codegen が最新か（sqlc / oapi-codegen / openapi-typescript / buf）
+        run: |
+          task gen
+          git diff --exit-code

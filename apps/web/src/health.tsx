@@ -1,19 +1,10 @@
+import { getHealth } from '@dispatch/api-client'
 import { useQuery } from '@tanstack/react-query'
-
-type Health = { status: string }
-
-async function fetchHealth(): Promise<Health> {
-  const res = await fetch('/healthz')
-  if (!res.ok) {
-    throw new Error(`healthz failed: ${res.status}`)
-  }
-  return (await res.json()) as Health
-}
 
 export function HealthPage() {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['health'],
-    queryFn: fetchHealth,
+    queryFn: () => getHealth(),
   })
 
   return (

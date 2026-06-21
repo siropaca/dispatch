@@ -6,7 +6,8 @@
       "apps/**/*.ts",
       "apps/**/*.tsx",
       "packages/**/*.ts",
-      "packages/**/*.tsx"
+      "packages/**/*.tsx",
+      "!**/*.d.ts"
     ]
   },
   "formatter": { "enabled": true, "indentStyle": "space", "indentWidth": 2 },
