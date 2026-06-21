@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: dispatch
+          POSTGRES_PASSWORD: dispatch
+          POSTGRES_DB: dispatch
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U dispatch"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgres://dispatch:dispatch@localhost:5432/dispatch?sslmode=disable
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jdx/mise-action@v2
+      - name: go test
+        run: cd backend && go test ./...
+      - name: golangci-lint
+        run: cd backend && golangci-lint run
+      - name: sqlc drift（生成物が最新か）
+        run: |
+          cd backend && sqlc generate
+          git diff --exit-code
+      - name: migrate
+        run: cd backend && goose -dir db/migrations postgres "$DATABASE_URL" up
+
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jdx/mise-action@v2
+      - run: pnpm install --frozen-lockfile
+      - name: build（typecheck + bundle）
+        run: cd apps/web && pnpm build
+      - name: biome
+        run: biome check .

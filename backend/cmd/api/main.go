@@ -18,7 +18,7 @@ import (
 func main() {
 	if err := run(); err != nil {
 		// logger 初期化前に落ちる可能性もあるため標準エラーへ
-		os.Stderr.WriteString(err.Error() + "\n")
+		_, _ = os.Stderr.WriteString(err.Error() + "\n")
 		os.Exit(1)
 	}
 }

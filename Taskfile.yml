@@ -10,10 +10,11 @@ tasks:
     silent: true
 
   setup:
-    desc: toolchain と依存を導入する
+    desc: toolchain・依存を導入し git hooks を設定する
     cmds:
       - mise install
       - pnpm install
+      - lefthook install
 
   db:up:
     desc: "ローカル Postgres を起動 (M2)"
@@ -50,14 +51,15 @@ tasks:
       - pnpm build
 
   test:
-    desc: "テスト (go test。web の vitest は M6)"
+    desc: "テスト (go test。web テストは今後追加)"
     cmds:
       - cd backend && go test ./...
 
   lint:
-    desc: "lint (M6)"
+    desc: "lint (go + web)"
     cmds:
-      - 'echo "TODO: M6 で golangci-lint / biome を実装"'
+      - cd backend && golangci-lint run
+      - biome check .
 
   gen:
     desc: "codegen: sqlc (buf / openapi は M7)"

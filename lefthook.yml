@@ -1,0 +1,10 @@
+# git hooks。`task setup`(= lefthook install)で有効化する。
+pre-commit:
+  parallel: true
+  commands:
+    go-lint:
+      glob: "*.go"
+      run: mise exec -- bash -c "cd backend && golangci-lint run"
+    web-check:
+      glob: "*.{ts,tsx}"
+      run: mise exec -- biome check .
