@@ -10,9 +10,10 @@ tasks:
     silent: true
 
   setup:
-    desc: toolchain を導入する(mise)
+    desc: toolchain と依存を導入する
     cmds:
       - mise install
+      - pnpm install
 
   db:up:
     desc: "ローカル Postgres を起動 (M2)"
@@ -25,12 +26,31 @@ tasks:
       - docker compose -f deploy/docker/docker-compose.yml down
 
   dev:
-    desc: "api をローカル起動 (web は M5 で追加)"
+    desc: "api と web を同時起動"
+    deps:
+      - api:dev
+      - web:dev
+
+  api:dev:
+    desc: "api を起動"
+    dir: backend
     cmds:
-      - cd backend && go run ./cmd/api
+      - go run ./cmd/api
+
+  web:dev:
+    desc: "web を起動"
+    dir: apps/web
+    cmds:
+      - pnpm dev
+
+  web:build:
+    desc: "web をビルド"
+    dir: apps/web
+    cmds:
+      - pnpm build
 
   test:
-    desc: "テスト (go test。web は M5 で追加)"
+    desc: "テスト (go test。web の vitest は M6)"
     cmds:
       - cd backend && go test ./...
 

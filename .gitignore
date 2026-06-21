@@ -1,3 +1,11 @@
 .idea/
 .env
 .env.local
+
+# 依存
+node_modules/
+
+# ビルド成果物
+dist/
+*.tsbuildinfo
+.DS_Store
