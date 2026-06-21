@@ -27,9 +27,10 @@ tasks:
       - docker compose -f deploy/docker/docker-compose.yml down
 
   dev:
-    desc: "api と web を同時起動"
+    desc: "api / worker / web を同時起動"
     deps:
       - api:dev
+      - worker:dev
       - web:dev
 
   api:dev:
@@ -37,6 +38,12 @@ tasks:
     dir: backend
     cmds:
       - go run ./cmd/api
+
+  worker:dev:
+    desc: "worker を起動"
+    dir: backend
+    cmds:
+      - go run ./cmd/worker
 
   web:dev:
     desc: "web を起動"

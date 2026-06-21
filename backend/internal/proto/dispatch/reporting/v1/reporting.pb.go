@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.11
 // 	protoc        (unknown)
-// source: dispatch/internal/v1/reporting.proto
+// source: dispatch/reporting/v1/reporting.proto
 
 package reportingv1
 
@@ -31,7 +31,7 @@ type RunReportingRequest struct {
 
 func (x *RunReportingRequest) Reset() {
 	*x = RunReportingRequest{}
-	mi := &file_dispatch_internal_v1_reporting_proto_msgTypes[0]
+	mi := &file_dispatch_reporting_v1_reporting_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43,7 +43,7 @@ func (x *RunReportingRequest) String() string {
 func (*RunReportingRequest) ProtoMessage() {}
 
 func (x *RunReportingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_dispatch_internal_v1_reporting_proto_msgTypes[0]
+	mi := &file_dispatch_reporting_v1_reporting_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,7 +56,7 @@ func (x *RunReportingRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RunReportingRequest.ProtoReflect.Descriptor instead.
 func (*RunReportingRequest) Descriptor() ([]byte, []int) {
-	return file_dispatch_internal_v1_reporting_proto_rawDescGZIP(), []int{0}
+	return file_dispatch_reporting_v1_reporting_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *RunReportingRequest) GetCorrespondentId() string {
@@ -75,7 +75,7 @@ type RunReportingResponse struct {
 
 func (x *RunReportingResponse) Reset() {
 	*x = RunReportingResponse{}
-	mi := &file_dispatch_internal_v1_reporting_proto_msgTypes[1]
+	mi := &file_dispatch_reporting_v1_reporting_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -87,7 +87,7 @@ func (x *RunReportingResponse) String() string {
 func (*RunReportingResponse) ProtoMessage() {}
 
 func (x *RunReportingResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_dispatch_internal_v1_reporting_proto_msgTypes[1]
+	mi := &file_dispatch_reporting_v1_reporting_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -100,7 +100,7 @@ func (x *RunReportingResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RunReportingResponse.ProtoReflect.Descriptor instead.
 func (*RunReportingResponse) Descriptor() ([]byte, []int) {
-	return file_dispatch_internal_v1_reporting_proto_rawDescGZIP(), []int{1}
+	return file_dispatch_reporting_v1_reporting_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *RunReportingResponse) GetReportingRunId() string {
@@ -110,38 +110,38 @@ func (x *RunReportingResponse) GetReportingRunId() string {
 	return ""
 }
 
-var File_dispatch_internal_v1_reporting_proto protoreflect.FileDescriptor
+var File_dispatch_reporting_v1_reporting_proto protoreflect.FileDescriptor
 
-const file_dispatch_internal_v1_reporting_proto_rawDesc = "" +
+const file_dispatch_reporting_v1_reporting_proto_rawDesc = "" +
 	"\n" +
-	"$dispatch/internal/v1/reporting.proto\x12\x14dispatch.internal.v1\"@\n" +
+	"%dispatch/reporting/v1/reporting.proto\x12\x15dispatch.reporting.v1\"@\n" +
 	"\x13RunReportingRequest\x12)\n" +
 	"\x10correspondent_id\x18\x01 \x01(\tR\x0fcorrespondentId\"@\n" +
 	"\x14RunReportingResponse\x12(\n" +
-	"\x10reporting_run_id\x18\x01 \x01(\tR\x0ereportingRunId2y\n" +
-	"\x10ReportingService\x12e\n" +
-	"\fRunReporting\x12).dispatch.internal.v1.RunReportingRequest\x1a*.dispatch.internal.v1.RunReportingResponseBKZIgithub.com/siropaca/dispatch/backend/gen/dispatch/internal/v1;reportingv1b\x06proto3"
+	"\x10reporting_run_id\x18\x01 \x01(\tR\x0ereportingRunId2{\n" +
+	"\x10ReportingService\x12g\n" +
+	"\fRunReporting\x12*.dispatch.reporting.v1.RunReportingRequest\x1a+.dispatch.reporting.v1.RunReportingResponseBWZUgithub.com/siropaca/dispatch/backend/internal/proto/dispatch/reporting/v1;reportingv1b\x06proto3"
 
 var (
-	file_dispatch_internal_v1_reporting_proto_rawDescOnce sync.Once
-	file_dispatch_internal_v1_reporting_proto_rawDescData []byte
+	file_dispatch_reporting_v1_reporting_proto_rawDescOnce sync.Once
+	file_dispatch_reporting_v1_reporting_proto_rawDescData []byte
 )
 
-func file_dispatch_internal_v1_reporting_proto_rawDescGZIP() []byte {
-	file_dispatch_internal_v1_reporting_proto_rawDescOnce.Do(func() {
-		file_dispatch_internal_v1_reporting_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_dispatch_internal_v1_reporting_proto_rawDesc), len(file_dispatch_internal_v1_reporting_proto_rawDesc)))
+func file_dispatch_reporting_v1_reporting_proto_rawDescGZIP() []byte {
+	file_dispatch_reporting_v1_reporting_proto_rawDescOnce.Do(func() {
+		file_dispatch_reporting_v1_reporting_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_dispatch_reporting_v1_reporting_proto_rawDesc), len(file_dispatch_reporting_v1_reporting_proto_rawDesc)))
 	})
-	return file_dispatch_internal_v1_reporting_proto_rawDescData
+	return file_dispatch_reporting_v1_reporting_proto_rawDescData
 }
 
-var file_dispatch_internal_v1_reporting_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
-var file_dispatch_internal_v1_reporting_proto_goTypes = []any{
-	(*RunReportingRequest)(nil),  // 0: dispatch.internal.v1.RunReportingRequest
-	(*RunReportingResponse)(nil), // 1: dispatch.internal.v1.RunReportingResponse
+var file_dispatch_reporting_v1_reporting_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_dispatch_reporting_v1_reporting_proto_goTypes = []any{
+	(*RunReportingRequest)(nil),  // 0: dispatch.reporting.v1.RunReportingRequest
+	(*RunReportingResponse)(nil), // 1: dispatch.reporting.v1.RunReportingResponse
 }
-var file_dispatch_internal_v1_reporting_proto_depIdxs = []int32{
-	0, // 0: dispatch.internal.v1.ReportingService.RunReporting:input_type -> dispatch.internal.v1.RunReportingRequest
-	1, // 1: dispatch.internal.v1.ReportingService.RunReporting:output_type -> dispatch.internal.v1.RunReportingResponse
+var file_dispatch_reporting_v1_reporting_proto_depIdxs = []int32{
+	0, // 0: dispatch.reporting.v1.ReportingService.RunReporting:input_type -> dispatch.reporting.v1.RunReportingRequest
+	1, // 1: dispatch.reporting.v1.ReportingService.RunReporting:output_type -> dispatch.reporting.v1.RunReportingResponse
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -149,26 +149,26 @@ var file_dispatch_internal_v1_reporting_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_dispatch_internal_v1_reporting_proto_init() }
-func file_dispatch_internal_v1_reporting_proto_init() {
-	if File_dispatch_internal_v1_reporting_proto != nil {
+func init() { file_dispatch_reporting_v1_reporting_proto_init() }
+func file_dispatch_reporting_v1_reporting_proto_init() {
+	if File_dispatch_reporting_v1_reporting_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_dispatch_internal_v1_reporting_proto_rawDesc), len(file_dispatch_internal_v1_reporting_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_dispatch_reporting_v1_reporting_proto_rawDesc), len(file_dispatch_reporting_v1_reporting_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_dispatch_internal_v1_reporting_proto_goTypes,
-		DependencyIndexes: file_dispatch_internal_v1_reporting_proto_depIdxs,
-		MessageInfos:      file_dispatch_internal_v1_reporting_proto_msgTypes,
+		GoTypes:           file_dispatch_reporting_v1_reporting_proto_goTypes,
+		DependencyIndexes: file_dispatch_reporting_v1_reporting_proto_depIdxs,
+		MessageInfos:      file_dispatch_reporting_v1_reporting_proto_msgTypes,
 	}.Build()
-	File_dispatch_internal_v1_reporting_proto = out.File
-	file_dispatch_internal_v1_reporting_proto_goTypes = nil
-	file_dispatch_internal_v1_reporting_proto_depIdxs = nil
+	File_dispatch_reporting_v1_reporting_proto = out.File
+	file_dispatch_reporting_v1_reporting_proto_goTypes = nil
+	file_dispatch_reporting_v1_reporting_proto_depIdxs = nil
 }

@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package dispatch.internal.v1;
+package dispatch.reporting.v1;
 
-option go_package = "github.com/siropaca/dispatch/backend/gen/dispatch/internal/v1;reportingv1";
+option go_package = "github.com/siropaca/dispatch/backend/internal/proto/dispatch/reporting/v1;reportingv1";
 
 // 取材ジョブの内部契約(サービス間 / Cloud Tasks 配送)。実処理は Phase 1 で実装する。
 message RunReportingRequest {

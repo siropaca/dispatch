@@ -2,8 +2,8 @@ version: v2
 # protoc プラグインは backend の go tool(go.mod の tool 依存)を使う。
 plugins:
   - local: ["go", "-C", "backend", "tool", "protoc-gen-go"]
-    out: backend/gen
+    out: backend/internal/proto
     opt: paths=source_relative
   - local: ["go", "-C", "backend", "tool", "protoc-gen-connect-go"]
-    out: backend/gen
+    out: backend/internal/proto
     opt: paths=source_relative
