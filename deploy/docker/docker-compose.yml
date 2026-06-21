@@ -1,0 +1,22 @@
+# ローカル開発用 Postgres。本番は Railway PG → 将来 Cloud SQL(ADR-0001)。
+services:
+  postgres:
+    image: postgres:17
+    container_name: dispatch-postgres
+    environment:
+      POSTGRES_USER: dispatch
+      POSTGRES_PASSWORD: dispatch
+      POSTGRES_DB: dispatch
+    ports:
+      # 他プロジェクトの 5432 と衝突しないようホスト側は 5433 を既定にする(env で上書き可)
+      - "${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - dispatch-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dispatch -d dispatch"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  dispatch-pgdata:
