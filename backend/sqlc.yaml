@@ -1,0 +1,11 @@
+version: "2"
+sql:
+  - engine: postgresql
+    # goose マイグレーションをスキーマの正典として共有する(ADR-0005)
+    schema: db/migrations
+    queries: db/queries
+    gen:
+      go:
+        package: sqlcgen
+        out: internal/platform/db/sqlcgen
+        sql_package: pgx/v5

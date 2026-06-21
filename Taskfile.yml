@@ -40,11 +40,19 @@ tasks:
       - 'echo "TODO: M6 で golangci-lint / biome を実装"'
 
   gen:
-    desc: "codegen: sqlc / buf / openapi (M4 / M7)"
+    desc: "codegen: sqlc (buf / openapi は M7)"
+    dir: backend
     cmds:
-      - 'echo "TODO: M4 / M7 で実装"'
+      - sqlc generate
 
   migrate:
-    desc: "マイグレーション適用 (M4)"
+    desc: "DB マイグレーション適用 (goose up)。要 DATABASE_URL"
+    dir: backend
     cmds:
-      - 'echo "TODO: M4 で goose を実装"'
+      - goose -dir db/migrations postgres "$DATABASE_URL" up
+
+  migrate:status:
+    desc: "マイグレーション状態を表示。要 DATABASE_URL"
+    dir: backend
+    cmds:
+      - goose -dir db/migrations postgres "$DATABASE_URL" status
