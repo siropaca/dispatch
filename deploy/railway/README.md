@@ -17,14 +17,19 @@ Railway に **3 サービス**を作る(同一リポジトリを参照)。詳細
 3. **api**: 「New → GitHub Repo」→ サービス設定で
    - Build: Dockerfile、Path = `deploy/docker/Dockerfile.api`、Root = リポジトリ root
    - Variables: `APP_ENV=production`、`DATABASE_URL=${{ Postgres.DATABASE_URL }}`(参照変数)
-   - Healthcheck Path: `/healthz`
-4. **worker**: 同様に Dockerfile = `deploy/docker/Dockerfile.worker`、`APP_ENV=production`、Healthcheck `/healthz`。
-5. デプロイ後、api の公開 URL で `/healthz` が `{"status":"ok"}` を返すことを確認する。
+   - Deploy → Healthcheck Path: `/healthz`
+   - **Networking → Generate Domain** で公開 URL を発行する
+4. **worker**: 同様に Dockerfile = `deploy/docker/Dockerfile.worker`、`APP_ENV=production`、Healthcheck `/healthz`。Phase 0 では公開ドメイン不要(Cloud Tasks 配線 = Phase 1 で、OIDC 付きの公開エンドポイントにする)。
+5. デプロイ後、api の公開 URL + `/healthz` が `{"status":"ok"}` を返すことを確認する。
 
 ## ビルド前提
 
 - Dockerfile のビルドコンテキストはリポジトリ **root**(`backend/` を参照するため)。
 - `PORT` は Railway が注入し、app(api / worker)はそれを読む。
+
+## 注意
+
+- **マイグレーションは自動実行されない**。api は起動時に DB へ Ping するだけなので、空 DB でも `/healthz` は通る。スキーマ適用(goose)は Phase 1 で取材機能を作る際に行う。
 
 ## 将来(全 GCP)
 
