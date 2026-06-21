@@ -19,7 +19,7 @@
 各 M は小さく、TDD・1 ファイル 200 行以内・完了条件つきで進める。
 
 ### M1 toolchain & 骨格
-- `mise.toml`(go / node / pnpm / task / sqlc / goose / buf / golangci-lint / lefthook をピン)
+- `mise.toml`(go / node / task / sqlc / goose / buf / golangci-lint / lefthook をピン。pnpm は Corepack で pin)
 - `Taskfile.yml`(dev / test / lint / gen / migrate / db:* の枠)
 - `pnpm-workspace.yaml`(apps/* packages/*)、`.editorconfig`
 - 完了: `mise install` でツールが揃い `task --list` が動く

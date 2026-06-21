@@ -39,6 +39,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: jdx/mise-action@v2
+      - name: pnpm を有効化
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.28.0 --activate
       - run: pnpm install --frozen-lockfile
       - name: build（typecheck + bundle）
         run: cd apps/web && pnpm build
@@ -50,6 +54,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: jdx/mise-action@v2
+      - name: pnpm を有効化
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.28.0 --activate
       - run: pnpm install --frozen-lockfile
       - name: codegen が最新か（sqlc / oapi-codegen / openapi-typescript / buf）
         run: |

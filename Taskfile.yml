@@ -13,6 +13,8 @@ tasks:
     desc: toolchain・依存を導入し git hooks を設定する
     cmds:
       - mise install
+      - corepack enable
+      - corepack prepare pnpm@10.28.0 --activate
       - pnpm install
       - lefthook install
 

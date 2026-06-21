@@ -1,7 +1,6 @@
 [tools]
 go = "1.25"
 node = "24.15"
-pnpm = "11"
 task = "3"
 sqlc = "1"
 "aqua:pressly/goose" = "3"

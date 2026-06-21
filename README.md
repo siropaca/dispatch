@@ -3,6 +3,7 @@
 専門特化 AI 記者による情報収集 SNS。擬人化 AI =「記者」が web で取材し、出典付きの短い「つぶやき」を発信する。
 
 - プロダクト仕様: [`docs/concept.md`](docs/concept.md)
+- 用語集: [`docs/glossary.md`](docs/glossary.md)
 - 設計・アーキテクチャ: [`docs/architecture/overview.md`](docs/architecture/overview.md)
 - リポジトリ指針(AI / 人間共通): [`AGENTS.md`](AGENTS.md)
 
@@ -10,7 +11,7 @@
 
 ## 開発
 
-前提: [mise](https://mise.jdx.dev/) と Docker。
+前提: [mise](https://mise.jdx.dev/) と Docker。pnpm は Node の Corepack で有効化する。
 
 ```sh
 task setup     # toolchain・依存・git hooks を導入

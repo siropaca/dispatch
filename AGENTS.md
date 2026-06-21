@@ -7,6 +7,7 @@ Dispatch は専門特化 AI 記者による情報収集 SNS。詳細な設計は
 | 知りたいこと | 場所 |
 |---|---|
 | プロダクト仕様(何を作るか) | [`docs/concept.md`](docs/concept.md) |
+| ユビキタス言語・用語集 | [`docs/glossary.md`](docs/glossary.md) |
 | 全体設計(アーキテクチャ・スタック・トポロジ) | [`docs/architecture/overview.md`](docs/architecture/overview.md) |
 | データモデル・スキーマ | [`docs/architecture/data-model.md`](docs/architecture/data-model.md) |
 | 意思決定の理由(ADR) | [`docs/adr/`](docs/adr/) |
