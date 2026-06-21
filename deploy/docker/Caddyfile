@@ -1,0 +1,21 @@
+# web の公開エントリ。SPA を配信し /api/* を api へリバースプロキシする(ADR-0015)。
+# $PORT は Railway / Cloud Run が注入。$API_UPSTREAM は api のプライベート宛先(host:port)。
+{
+	admin off
+}
+
+:{$PORT:8080} {
+	encode gzip
+
+	# /api/* はパスをそのまま api コンテナへ転送する(api は /api 配下で配信)。
+	handle /api/* {
+		reverse_proxy {$API_UPSTREAM}
+	}
+
+	# それ以外は SPA。クライアントルーティングは index.html にフォールバックする。
+	handle {
+		root * /srv
+		try_files {path} /index.html
+		file_server
+	}
+}

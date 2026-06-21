@@ -1,0 +1,10 @@
+# Docker ビルドコンテキストはリポジトリ root。不要物を送らない。
+.git
+.github
+**/node_modules
+**/dist
+*.tsbuildinfo
+.env
+.env.local
+.DS_Store
+.idea
