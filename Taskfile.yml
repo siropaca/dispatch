@@ -2,9 +2,9 @@ version: "3"
 
 # タスクはここに一元化する(ADR-0009)。未実装のものは該当マイルストーンで実装する。
 
-# ローカル開発の環境変数は repo root の .env から読む(無くてもエラーにしない)。
+# ローカル開発の環境変数は backend/.env から読む(無くてもエラーにしない)。
 # CI は env を明示注入するため .env は不要。
-dotenv: [".env"]
+dotenv: ["backend/.env"]
 
 tasks:
   default:

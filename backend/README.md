@@ -42,7 +42,7 @@ task gen          # codegen(sqlc / oapi-codegen / openapi-typescript / buf)
 
 ## 環境変数
 
-`.env.example`(リポジトリ root)参照。`api` は `DATABASE_URL` 必須、`PORT`(既定 8080)/ `APP_ENV` を読む。`worker` は `PORT`(既定 8081)/ `APP_ENV`。
+`backend/.env.example` 参照(`task` 実行時に `backend/.env` が自動ロードされる)。`api` は `DATABASE_URL` 必須、`PORT`(既定 8080)/ `APP_ENV` を読む。`worker` は `PORT`(既定 8081)/ `APP_ENV`。
 
 ## codegen(生成物はコミット必須)
 

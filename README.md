@@ -22,4 +22,4 @@ task lint      # lint(go + web)
 task gen       # codegen(sqlc / oapi-codegen / openapi-typescript / buf)
 ```
 
-`api` はローカル DB が必要。`.env.example` を `.env` にコピーして `DATABASE_URL` 等を用意する(`.env` は Git 管理外)。`task --list` で全タスクを確認できる。
+`api` はローカル DB が必要。`backend/.env.example` を `backend/.env` にコピーして `DATABASE_URL` 等を用意する(`.env` は Git 管理外)。`task --list` で全タスクを確認できる。
