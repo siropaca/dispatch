@@ -49,8 +49,8 @@ task gen          # codegen(sqlc / oapi-codegen / openapi-typescript / buf)
 | 生成物 | 入力 | 出力 |
 |---|---|---|
 | sqlc | `db/queries` + `db/migrations` | `internal/platform/db/sqlcgen` |
-| oapi-codegen | `../api/openapi.yaml` | `internal/platform/httpapi` |
-| buf(proto / connect) | `../proto` | `internal/proto` |
+| oapi-codegen | `../contracts/openapi.yaml` | `internal/platform/httpapi` |
+| buf(proto / connect) | `../contracts/proto` | `internal/proto` |
 
 CI は `task gen` 後に差分が出れば fail(ドリフト検出)。
 

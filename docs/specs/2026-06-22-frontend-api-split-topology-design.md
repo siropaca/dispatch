@@ -38,7 +38,7 @@ https://<独自ドメイン>/api/*    → api(Go)
 ### api を `/api` 配下へ
 - ルート結線を `httpapi.HandlerFromMuxWithBaseURL(server, r, "/api")` に変更(oapi-codegen 生成済みの BaseURL 版を使用)。
 - probes は `/api/healthz`・`/api/readyz` になる(契約と一貫)。Railway / LB のヘルスチェックパスもこれに合わせる。
-- `api/openapi.yaml` に `servers: [{ url: /api }]` を記載(クライアント基準 URL の明示)。
+- `contracts/openapi.yaml` に `servers: [{ url: /api }]` を記載(クライアント基準 URL の明示)。
 - 生成物(`httpapi.gen.go` / `schema.d.ts`)を再生成。
 
 ### api-client / フロント

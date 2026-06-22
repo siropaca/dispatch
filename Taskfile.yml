@@ -78,7 +78,7 @@ tasks:
     desc: "codegen: sqlc / oapi-codegen / openapi-typescript / buf"
     cmds:
       - cd backend && sqlc generate
-      - cd backend && go tool oapi-codegen -config internal/platform/httpapi/config.yaml ../api/openapi.yaml
+      - cd backend && go tool oapi-codegen -config internal/platform/httpapi/config.yaml ../contracts/openapi.yaml
       - cd packages/api-client && pnpm gen
       - buf generate
 

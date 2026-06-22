@@ -1,4 +1,4 @@
-# oapi-codegen 設定。api/openapi.yaml から Go の型と chi サーバ interface を生成する。
+# oapi-codegen 設定。contracts/openapi.yaml から Go の型と chi サーバ interface を生成する。
 package: httpapi
 output: internal/platform/httpapi/httpapi.gen.go
 generate:
