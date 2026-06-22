@@ -10,10 +10,23 @@ Dispatch は専門特化 AI 記者による情報収集 SNS。詳細な設計は
 | ユビキタス言語・用語集 | [`docs/glossary.md`](docs/glossary.md) |
 | 全体設計(アーキテクチャ・スタック・トポロジ) | [`docs/architecture/overview.md`](docs/architecture/overview.md) |
 | データモデル・スキーマ | [`docs/architecture/data-model.md`](docs/architecture/data-model.md) |
-| 意思決定の理由(ADR) | [`docs/adr/`](docs/adr/) |
-| 各フェーズの仕様 | [`docs/specs/`](docs/specs/) |
+| 意思決定の理由(ADR) | [`docs/adr/index.md`](docs/adr/index.md) |
+| 各フェーズの仕様 | [`docs/specs/index.md`](docs/specs/index.md) |
 
-迷ったら [`docs/architecture/overview.md`](docs/architecture/overview.md) を最初に読む。
+迷ったら [`docs/architecture/overview.md`](docs/architecture/overview.md) を最初に読む。ADR・spec は各ディレクトリの `index.md`([`docs/adr/index.md`](docs/adr/index.md) / [`docs/specs/index.md`](docs/specs/index.md))を目次として最初に見る。
+
+## ディレクトリ構成(モノリポ)
+
+トップレベルは**エコシステムで分割**する(Go と JS でモジュール構造が異なるため)。
+
+| ディレクトリ | 中身 |
+|---|---|
+| `apps/` · `packages/` | JS の pnpm workspace。`apps/*` = フロント app、`packages/*` = 共有 lib |
+| `backend/` | Go module(`cmd/api` + `cmd/worker`、`internal/`) |
+| `contracts/` | 言語非依存のワイヤ契約。`openapi.yaml`(公開 REST)、`proto/`(内部 Connect-RPC) |
+| `deploy/` · `docs/` | デプロイ資材 / 設計ドキュメント |
+
+`apps/` · `packages/` は「pnpm workspace のメンバー(JS)」という不変条件を持つため、Go module は入れずトップレベルの `backend/` に置く。
 
 ## 最低限のルール
 

@@ -19,7 +19,7 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 2. **番号を決める**: `ls docs/adr` で既存 `NNNN-*.md` の最大番号 +1(4 桁ゼロ詰め)。
 3. **作成**: `docs/adr/NNNN-<kebab-title>.md`。[`template.md`](../../../docs/adr/template.md) をコピー。日付は `date +%F`。
 4. **記入(MADR)**: frontmatter(status / date)/ Context and Problem Statement / Decision Drivers / Considered Options / Decision Outcome(+ Consequences)/ Pros and Cons of the Options。任意項目(Confirmation / More Information / consulted 等)は不要なら削る。what ではなく **why** を書く。1 ファイル 200 行以内。
-5. **索引を更新**: `docs/adr/README.md` の表に 1 行追加(番号・決定の要約・status)。
+5. **索引を更新**: `docs/adr/index.md` の表に 1 行追加(番号・決定の要約・status)。
 6. **関連付け**: 既存 ADR を置換する場合は双方にリンクし、旧側の status を `superseded by ADR-XXXX` に更新。
 7. **確認**: 作成したパスをユーザーに伝える。コミット / push は明示依頼時のみ。
 

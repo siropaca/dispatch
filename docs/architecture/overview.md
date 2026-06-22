@@ -85,4 +85,4 @@ flowchart TD
 - [`infrastructure.md`](./infrastructure.md) — デプロイトポロジ・GCP 移行・取材パイプライン
 - [`cross-cutting.md`](./cross-cutting.md) — テスト / ハーネス / 安全ガードレール / 可観測性
 - [`data-model.md`](./data-model.md) — エンティティ・ERD・不変条件
-- [`../adr/`](../adr/README.md) — 意思決定の記録
+- [`../adr/index.md`](../adr/index.md) — 意思決定の記録

@@ -2,7 +2,7 @@
 
 > 日付: 2026-06-21
 > ステータス: **M1–M8 完了**(CI green)。以後の正典はコード。本書は build plan の記録。
-> 前提(決定済み): [`../architecture/overview.md`](../architecture/overview.md) と [`../adr/`](../adr/README.md)。本書は設計の再決定ではなく **build plan**(何を・どの順で作り、何を満たせば完了か)。
+> 前提(決定済み): [`../architecture/overview.md`](../architecture/overview.md) と [`../adr/`](../adr/index.md)。本書は設計の再決定ではなく **build plan**(何を・どの順で作り、何を満たせば完了か)。
 
 ## ゴール
 
