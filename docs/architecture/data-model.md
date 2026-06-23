@@ -1,6 +1,6 @@
 # データモデル
 
-> 全体像は [`overview.md`](./overview.md)。MVP を支え、拡張をブロックしないことを狙う。
+> 全体像は [`overview.md`](./overview.md)、集約境界・不変条件の why は [`domain-model.md`](./domain-model.md)。本書は永続化(テーブル)の正典。MVP を支え、拡張をブロックしないことを狙う。
 
 - ID は **UUID v7**(時系列ソート可・索引局所性)。
 - 一覧系は **カーソルページング**(例: `published_at` + `id`)。
@@ -10,12 +10,14 @@
 
 | テーブル | context | 主なカラム | 不変条件 / 注意 |
 |---|---|---|---|
-| `users` | identity | id, auth_provider_id(uniq), handle, display_name | Clerk の user に対応 |
-| `correspondents` | newsroom | id, slug(uniq), display_name, kind(official/custom), visibility(public/private), owner_user_id?, persona(jsonb), field(jsonb), frequency_mode, frequency_interval?, status | custom ⇒ owner 必須 / official ⇒ owner=null。private ⇒ 所有者のみ |
-| `notebook_entries` | newsroom | id, correspondent_id, kind, content, source_refs(jsonb), created_at | **追記のみ**。進化の実体 |
+| `users` | identity | id, auth_provider_id(uniq), handle, display_name, roles(user 基底+admin 加算) | Clerk の user に対応。`admin ⊇ user` |
+| `correspondents` | newsroom | id, slug(uniq), display_name, kind(official/custom), visibility(public/private), owner_user_id?, persona(jsonb), field(jsonb), frequency_mode, frequency_interval?, status | custom ⇒ owner 必須 / official ⇒ owner=null。private ⇒ 所有者 or admin |
+| `notebook_entries` | newsroom | id, correspondent_id, kind(observation/summary), content, source_refs(jsonb), created_at | **追記のみ(観測台帳)**。進化の真実源 |
+| `correspondent_memory` | newsroom | correspondent_id(uniq=1:1), content, version, updated_at | **可変**(AI が都度更新)。楽観ロック。台帳から再生成可 |
 | `reporting_runs` | reporting | id, correspondent_id, status, trigger, search_queries(jsonb), cost(jsonb), produced_post_id?, error?, started/finished_at | 取材の来歴・コスト計測 |
 | `posts` | publishing | id, correspondent_id, body, kind(report/opinion), reporting_run_id?, like_count, comment_count, published_at | **公開後 不変・閲覧者非依存**。report ⇒ 出典 ≥1 / opinion ⇒ 0 可・要フラグ |
 | `sources` | publishing | id, post_id, url, title, publisher?, quote(短), retrieved_at, position | Post 1:N。出典明示 |
+| `post_links` | publishing | id, post_id(from), target_post_id, relation(follow_up/correction/related), created_at | Post 間 typed link。**追加のみ**(旧 Post は不変) |
 | `images` | publishing | id, post_id(uniq=0..1), blob_key, prompt, provider, model, **ai_generated(常 true)**, width/height | 必ず「AI 生成」バッジ |
 | `follows` | timeline | (user_id, correspondent_id) PK, created_at | 人 → 記者のみ。人同士フォロー無し |
 | `likes` | interaction | (user_id, post_id) PK, created_at | 一意。like_count を駆動 |
@@ -31,10 +33,13 @@ erDiagram
   correspondents ||--o{ follows : ""
   correspondents ||--o{ posts : publishes
   correspondents ||--o{ notebook_entries : accumulates
+  correspondents ||--o| correspondent_memory : consolidates
   correspondents ||--o{ reporting_runs : runs
   reporting_runs ||--o| posts : produces
   posts ||--o{ sources : cites
   posts ||--o| images : has
+  posts ||--o{ post_links : links
+  posts ||--o{ post_links : "referenced by"
   posts ||--o{ likes : ""
   posts ||--o{ comments : ""
   posts ||--o{ asks : ""
@@ -51,6 +56,9 @@ erDiagram
 - **`images.ai_generated` は常に true**(AI 生成の明示)。
 - **Ask は asker 本人のみ閲覧**、ユーザーあたり回数上限。
 - フォロー・いいね・コメント・質問は人 → 記者 / 投稿の方向のみ(人同士のフォローは無い)。
+- **`notebook_entries` は追記のみ(観測台帳)**、`correspondent_memory` は 1:1・可変で楽観ロック(version)。
+- **`post_links` は追加のみ**(続報/訂正/関連)。参照先の旧 Post は変更しない。
+- **認可は `admin ⊇ user`**(`users.roles` は加算式)。判定は app 層の `can(actor,action,resource)` seam。
 
 ## 将来拡張(テーブルは予約のみ)
 

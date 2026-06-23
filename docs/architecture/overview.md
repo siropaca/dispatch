@@ -81,6 +81,7 @@ flowchart TD
 
 ## 5. 関連ドキュメント
 
+- [`domain-model.md`](./domain-model.md) — 戦略 DDD(サブドメイン区分・コンテキストマップ・集約境界・認可・ドメインイベント)
 - [`backend.md`](./backend.md) — レイヤ・ライブラリ・ディレクトリ・ports・API スタイル
 - [`infrastructure.md`](./infrastructure.md) — デプロイトポロジ・GCP 移行・取材パイプライン
 - [`cross-cutting.md`](./cross-cutting.md) — テスト / ハーネス / 安全ガードレール / 可観測性
